@@ -1,0 +1,75 @@
+# Maintainer: Alexander Konarev  avkonarev at gmail dot com
+pkgname=1c-enterprise
+#_pkgver=8.3
+#_pkgsubver=6.1999
+#pkgver=$_pkgver.$pkgsubver
+pkgver=8.3.6.1999
+pkgrel=1
+pkgdesc="Universal platform for creating financial applications"
+groups='1C'
+arch=("i686" "x86_64")
+license=('')
+url="www.1c.ru"
+
+source_x86_64=(
+        "client.deb64.tar.gz"
+        "deb64.tar.gz"
+        "thin.client.deb64.tar.gz"
+        )
+
+source_i686=(
+        "client.deb.tar.gz"
+        "deb.tar.gz"
+        "thin.client.deb.tar.gz"
+        )
+
+md5sums_x86_64=('SKIP'
+         'SKIP'
+         'SKIP')
+
+md5sums_i686=('SKIP'
+         'SKIP'
+         'SKIP')
+
+depens=(
+        'imagemagick'
+        'libgsf'
+        'ttf-ms-fonts'
+        'unixodbc'
+        'cups'
+        'ttf2pt1'
+        'webkitgtk2'
+        )
+
+makedepens=('ar' 'tar')
+
+optdepens=(
+           'aksusbd: Sentinel driver for hardware protection device'
+           'ehaspd:  Etersoft driver for hardware protection device'
+           )
+
+install=1c.install
+
+prepare() {
+  cd $srcdir
+  for f in *.deb
+  do
+    ar p $f data.tar.gz | tar zx
+    rm $f
+  done
+}
+
+package() {
+  cd $srcdir
+#  install -Dm755 oscript "$pkgdir/usr/bin/oscript"
+
+ # install -d "$pkgdir/usr/share/oscript/examples"
+  #install -Dm644 snake.os "$pkgdir/usr/share/oscript/examples"
+
+  #cd $srcdir/OneScript-$pkgver/
+  #install -d "$pkgdir/usr/lib/oscript"
+  #install -Dm644 * "$pkgdir/usr/lib/oscript"
+  cp -r $srcdir/etc $pkgdir
+  cp -r $srcdir/opt $pkgdir
+  cp -r $srcdir/usr $pkgdir
+}
